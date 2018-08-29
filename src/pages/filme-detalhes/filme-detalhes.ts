@@ -20,9 +20,8 @@ export class FilmeDetalhesPage {
 
   ionViewDidEnter() {
     this.filmeid = this.navParams.get("id");
-    this.movieProvider.getMovieDetails(this.filmeid).subscribe(data => {
-      const retorno = (data as any);
-      this.filme = retorno; //Imagino que o erro está nesse bloco de código
+    this.movieProvider.getMovieDetails(this.filmeid).subscribe(filme => {
+      this.filme = filme;
       console.log(this.filme);
     }, error =>{
       console.log(error);
