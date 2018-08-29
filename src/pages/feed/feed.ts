@@ -25,6 +25,8 @@ export class FeedPage {
 
   public nomeUsuario: string = "Richard Oliveira";
   public loader;
+  public refresher;
+  public isRefreshing: boolean = false;
 
   constructor(
     public navCtrl: NavController,
@@ -49,7 +51,18 @@ export class FeedPage {
     //alert(num1 + num2);
   }
 
+  doRefresh(refresher) {
+    this.refresher = refresher;
+    this.isRefreshing = true;
+
+    this.carregarFilmes();
+  }
+
   ionViewDidEnter() {
+    this.carregarFilmes();
+  }
+
+  carregarFilmes() {
     this.abreCarregando();
     this.movieProvider.getLatestMovies().subscribe(
       data => {
@@ -57,10 +70,19 @@ export class FeedPage {
         const objeto_retorno = (data as any);
         this.lista_filmes = objeto_retorno.results;
         console.log(objeto_retorno);
+
         this.fechaCarregando();
+        if (this.isRefreshing) {
+          this.refresher.complete();
+          this.isRefreshing = false;
+        }
       }, error => {
         console.log(error);
         this.fechaCarregando();
+        if (this.isRefreshing) {
+          this.refresher.complete();
+          this.isRefreshing = false;
+        }
       }
 
     )
