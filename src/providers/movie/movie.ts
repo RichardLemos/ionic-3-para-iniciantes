@@ -14,7 +14,7 @@ export class MovieProvider {
   }
 
   getMovieDetails(filmeid) {
-    return this.http.get(this.baseApiPath + '/movie/${filmeid}?api_key=c0faff0c969cd1d702c0f3b8e37b6d27');
+    return this.http.get(this.baseApiPath + `/movie/${filmeid}?api_key=c0faff0c969cd1d702c0f3b8e37b6d27`);
   }
 
 }
